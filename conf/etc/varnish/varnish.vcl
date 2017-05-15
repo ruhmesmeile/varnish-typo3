@@ -91,11 +91,6 @@ sub vcl_recv {
     return (pass);
   }
 
-  # do not cache Authorized content
-  if (req.http.Authorization) {
-    return (pass);
-  }
-
   # do not cache Cookie based content
   if (req.http.Cookie) {
     return (pass);
