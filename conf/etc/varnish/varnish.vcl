@@ -40,6 +40,7 @@ backend default {
 
 acl ban {
   "127.0.0.1";
+  "10.1.0.0"/16;
 }
 
 
