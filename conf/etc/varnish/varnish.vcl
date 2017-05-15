@@ -70,18 +70,6 @@ sub vcl_recv {
 
   }
 
-  # Set X-Forwarded-For Header
-  if (req.restarts == 0) {
-
-    if (req.http.x-forwarded-for) {
-      set req.http.X-Forwarded-For =
-      req.http.X-Forwarded-For + ", " + client.ip;
-    } else {
-      set req.http.X-Forwarded-For = client.ip;
-    }
-
-  }
-
   # Pipe unknown Methods
   if (req.method != "GET" &&
     req.method != "HEAD" &&
