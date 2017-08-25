@@ -49,6 +49,20 @@ acl ban {
  */
 
 sub vcl_recv {
+  if (req.http.X-Blackfire-Query) {
+    if (req.esi_level > 0) {
+        # ESI request should not be included in the profile.
+        # Instead you should profile them separately, each one
+        # in their dedicated profile.
+        # Removing the Blackfire header avoids to trigger the profiling.
+        # Not returning let it go trough your usual workflow as a regular
+        # ESI request without distinction.
+        unset req.http.X-Blackfire-Query;
+    } else {
+        return (pass);
+    }
+  }
+  
   # Catch BAN Command
   if (req.method == "BAN" && client.ip ~ ban) {
 
